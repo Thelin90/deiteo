@@ -3,8 +3,9 @@
 . /common.sh
 
 echo "~~~~~~~~~~~~"
-echo "$(hostname -i) spark-master" >> /etc/hosts
-echo cat /etc/hosts
+cat /etc/hosts
+echo "$(hostname -i) sparkmaster" >> /etc/hosts
+cat /etc/hosts
 echo "~~~~~~~~~~~~"
 
-/usr/local/spark/bin/spark-class org.apache.spark.deploy.master.Master --ip spark-master --port 7077 --webui-port 8080
+/usr/local/spark/bin/spark-class org.apache.spark.deploy.master.Master --host sparkmaster --port 7077 --webui-port 8080

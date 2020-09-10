@@ -6,14 +6,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      component: spark-master
+      component: sparkmaster
   template:
     metadata:
       labels:
-        component: spark-master
+        component: sparkmaster
     spec:
       containers:
-        - name: spark-master
+        - name: sparkmaster
           image: spark-hadoop:3.0.0
           command: ["/bin/bash", "./spark-master.sh"]
           ports:

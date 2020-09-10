@@ -12,4 +12,4 @@ kubectl apply -f ./tools/k8s/spark/minikube-ingress.yaml
 
 echo "Add an entry to /etc/hosts:"
 sleep 2
-echo "$(minikube ip) spark-kubernetes" | sudo tee -a /etc/hosts
+echo "$(minikube ip) sparkkubernetes" | sudo tee -a /etc/hosts
