@@ -9,8 +9,4 @@ if ! getent hosts sparkmaster; then
   exit 0
 fi
 
-/usr/local/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://sparkmaster:7077 --webui-port 8081
-
-echo "org.apache.spark.deploy.worker.Worker set"
-
-os.environ["PYSPARK_SUBMIT_ARGS"] = "--driver-memory 10g pyspark-shell"
+/usr/local/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://sparkmaster:7077 --webui-port 8081 --memory 2g

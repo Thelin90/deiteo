@@ -63,7 +63,28 @@ eval $(minikube docker-env)
 docker build -t spark-hadoop:3.0.0 -f tools/docker/spark/Dockerfile.local.spark .
 ```
 
-Then
+Tear up:
 ```bash
 ./tools/k8s/spark/create_local.sh
+```
+
+To tear down run:
+```bash
+./tools/k8s/spark/delete_local.sh
+```
+
+## Verify K8S Cluster
+
+`Example`
+
+```bash
+  |  ~/c/deiteo | on   DEITEO-001-F…To-Worker(s) !1 ▓▒░ kubectl get pods
+NAME                           READY   STATUS    RESTARTS   AGE
+spark-worker-cb4fc9c8d-fhsxh   1/1     Running   0          53m
+sparkmaster-cccbbdfcd-qktwq    1/1     Running   0          54m
+>>
+```
+
+```bash
+kubectl exec sparkmaster-cccbbdfcd-b7g2d -it -- spark-submit example_spark.py
 ```
