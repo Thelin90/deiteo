@@ -3,7 +3,7 @@ apiVersion: apps/v1
 metadata:
   name: spark-worker
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       component: spark-worker
@@ -13,9 +13,9 @@ spec:
         component: spark-worker
     spec:
       containers:
-        - name: spark-worker
+        - name: spar-kworker
           image: spark-hadoop:3.0.0
-          command: ["/bin/bash", "./spark-worker.sh"]
+          command: ["./spark-worker.sh"]
           ports:
             - containerPort: 8081
           resources:

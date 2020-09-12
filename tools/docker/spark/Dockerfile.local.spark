@@ -13,12 +13,16 @@ ENV PYSPARK_DRIVER_PYTHON /usr/local/bin/python
 ENV PYTHONUNBUFFERED 1
 ENV HADOOP_COMMON org.apache.hadoop:hadoop-common:2.7.7
 ENV HADOOP_AWS org.apache.hadoop:hadoop-aws:2.7.7
+ENV SPARK_MASTER_HOST sparkmaster
 
 # Java
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 
 # Install curl
 RUN apt-get update && apt-get install -y curl
+
+# Install procps
+RUN apt-get install -y procps
 
 # Install coreutils
 RUN apt-get install -y coreutils
@@ -35,6 +39,7 @@ RUN curl http://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPA
 
 # add scripts and update spark default config
 ADD tools/docker/spark/common.sh tools/docker/spark/spark-master.sh tools/docker/spark/spark-worker.sh /
+ADD tools/docker/spark/example_spark.py /
 
 RUN chmod +x /common.sh /spark-master.sh /spark-worker.sh
 
