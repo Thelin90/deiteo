@@ -7,6 +7,9 @@ spec:
     - name: webui
       port: 8080
       targetPort: 8080
+    - name: detailedwebui4040
+      port: 4040
+      targetPort: 4040
     - name: spark
       port: 7077
       targetPort: 7077
