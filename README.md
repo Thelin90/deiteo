@@ -26,6 +26,23 @@ This project utilises `pipenv`, due to its correctness, and nice features with d
 via the `Pipfile.lock`. It also enables us to control the Python environment in a nice modular
 way.
 
+First make sure to make a copy of the `.env` file.
+
+```bash
+cp .env.example .env
+```
+
+Then set the `PYTHONPATH` for `pipenv` to use for this project.
+```bash
+make pythonpath
+```
+
+Then run:
+
+```bash
+make build
+```
+
 If a new `library` is added to the `Pipfile`, then run:
 
 ```bash
