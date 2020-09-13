@@ -142,7 +142,7 @@ The `spark web ui` and `spark detailed web ui` can now be reached at:
 `NOTE! jobs will only be available while you run a spark job, access this while running example
 code below, or simply run a pyspark shell interactively if there is a need to verify this`
 
-[http://sparkkubernetes](http://sparkkubernetes/jobs)
+[http://sparkkubernetes/jobs](http://sparkkubernetes/jobs)
 ![alt text](img/detailedsparkui.png)
 
 Start `minikube dashboard` to monitor the pods via the browser:
