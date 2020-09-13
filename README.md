@@ -5,6 +5,8 @@ kubernetes and kafka.
 
 To enable a streaming platform utilising `spark structured streaming`.
 
+`WORK IN PROGRESS`
+
 # Requirements
 
 * pipenv
@@ -130,6 +132,11 @@ Then run:
 
 ```bash
 echo "$(minikube ip) sparkkubernetes" | sudo tee -a /etc/hosts
+```
+
+Start `minikube dashboard` to monitor the pods via the browser:
+```bash
+minikube dashboard
 ```
 
 To tear down run:
