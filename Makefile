@@ -17,7 +17,7 @@ pythonpath:
 
 .PHONY: update_spark_docker_python_requirements
 update_spark_docker_python_requirements:
-	 ./tools/scripts/create_requirements.sh
+	 ./tools/scripts/spark/create_requirements.sh
 
 .PHONY: update
 update:
@@ -34,3 +34,15 @@ test-ipdb:
 .PHONY: test
 test:
 	pipenv run python -m pytest $(pytest_test_args) --cov-config=.coveragerc --cov=src tests/$(pytest_test_type) -v
+
+.PHONY: build_spark_docker
+build_spark_docker:
+	 ./tools/scripts/spark/build_spark_docker.sh
+
+.PHONY: deploy_spark_k8s_cluster
+deploy_spark_k8s_cluster:
+	 ./tools/scripts/k8s/create_local.sh
+
+.PHONY: delete_spark_k8s_cluster
+delete_spark_k8s_cluster:
+	 ./tools/scripts/k8s/delete_local.sh
