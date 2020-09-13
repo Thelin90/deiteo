@@ -51,7 +51,19 @@ minikube dashboard
 
 # Deploy to local K8S
 
-## Docker
+## Spark
+
+I was inspired by this repository: https://github.com/testdrivenio/spark-kubernetes
+However I have continued on the structure and made my own improvements.
+
+### Docker
+
+The container is available under `tools/docker/spark/Dockerfile.local.spark`.
+
+It contains:
+
+* python3.7
+* spark 3.0.0
 
 The command `minikube docker-env` returns a set of bash environment variable exports to configure
 your local environment to re-use the Docker daemon inside the Minikube instance.
@@ -73,7 +85,7 @@ To tear down run:
 ./tools/k8s/spark/delete_local.sh
 ```
 
-## Verify K8S Cluster
+### Verify K8S Cluster
 
 `Example`
 
