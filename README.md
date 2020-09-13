@@ -20,6 +20,28 @@ docker-desktop -> preferences -> Kubernetes -> Enable Kubernetes
 Make sure to set memory above 8192, may need to restart docker-desktop
 ```
 
+## pipenv
+
+This project utilises `pipenv`, due to its correctness, and nice features with dependency checks
+via the `Pipfile.lock`. It also enables us to control the Python environment in a nice modular
+way.
+
+If a new `library` is added to the `Pipfile`, then run:
+
+```bash
+make update
+```
+
+Note:
+
+`to update the spark docker container, if a new package is added to Pipefile and a new Pipfile.lock is created run:`
+
+```bash
+make update_spark_docker_python_requirements
+```
+
+This will install the packages from `packages` and not from `dev-packages`.
+
 ## Kubectl
 
 Install `kubectl`:
@@ -78,6 +100,19 @@ docker build -t spark-hadoop:3.0.0 -f tools/docker/spark/Dockerfile.local.spark 
 Tear up:
 ```bash
 ./tools/k8s/spark/create_local.sh
+```
+
+`I have for some reason noticed that it does not work when I do this in the script, so run this
+stand alone for now!`
+
+```bash
+kubectl apply -f ./tools/k8s/spark/minikube-ingress.yaml
+```
+
+Then run:
+
+```bash
+echo "$(minikube ip) sparkkubernetes" | sudo tee -a /etc/hosts
 ```
 
 To tear down run:

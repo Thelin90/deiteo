@@ -1,13 +1,16 @@
 """Example script to test spark functionality within the K8S cluster"""
-import logging
 from pyspark import SparkContext
 
-# Create logger
-LOGGER = logging.getLogger(__name__)
+# Extract SparkContext
+sc = SparkContext()
 
 # Perform some basic data operations
 words = 'this is an example to run!'
-sc = SparkContext()
+
+sc.setLogLevel("INFO")
+log4jLogger = sc._jvm.org.apache.log4j
+LOGGER = log4jLogger.LogManager.getLogger(__name__)
+
 seq = words.split()
 data = sc.parallelize(seq)
 collected_data = data.collect()
@@ -15,7 +18,7 @@ counts = data.map(lambda word: (word, 1)).reduceByKey(lambda a, b: a + b).collec
 counts = dict(counts)
 
 LOGGER.info(
-    f"~~~~~~~~~~~~~~~\n"
+    f"\n\n~~~~~~~~~~~~~~~\n"
     f"EXAMPLE SPARK SCRIPT FOR DEITEO\n"
     f"SEQ={seq}\n"
     f"COLLECTED DATA = {collected_data}\n"

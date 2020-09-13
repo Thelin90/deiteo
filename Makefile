@@ -15,6 +15,10 @@ deps:
 pythonpath:
 	 echo "PYTHONPATH=${PWD}/src/" >> .env
 
+.PHONY: update_spark_docker_python_requirements
+update_spark_docker_python_requirements:
+	 ./tools/scripts/create_requirements.sh
+
 .PHONY: update
 update:
 	pipenv update --dev --python 3.7
@@ -23,7 +27,7 @@ update:
 pre_commit_py37:
 	pipenv run pre-commit
 
-.PHONY: test-ipdb
+.PHONY: test_ipdb
 test-ipdb:
 	pipenv run python -m pytest $(pytest_test_args) --cov-config=.coveragerc --cov=src tests/$(pytest_test_type) -s -v
 
