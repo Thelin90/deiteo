@@ -25,7 +25,7 @@ RUN apt-get update && apt-get install -y curl
 RUN apt-get install -y procps
 
 # Install coreutils
-RUN apt-get install -y coreutils
+RUN apt-get install -y coreutils && apt-get install gcc python3-dev -y
 
 # https://github.com/geerlingguy/ansible-role-java/issues/64
 RUN apt-get update && mkdir -p /usr/share/man/man1 && apt-get install -y openjdk-8-jdk && \
@@ -39,9 +39,11 @@ RUN curl http://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPA
 
 # add scripts and update spark default config
 ADD tools/docker/spark/common.sh tools/docker/spark/spark-master.sh tools/docker/spark/spark-worker.sh /
-ADD tools/docker/spark/example_spark.py /
+ADD tools/docker/spark/example_spark.py tools/docker/spark/requirements.txt /
 
 RUN chmod +x /common.sh /spark-master.sh /spark-worker.sh
 
 ADD tools/docker/spark/spark-defaults.conf ${SPARK_HOME}/conf/spark-defaults.conf
 ENV PATH $PATH:${SPARK_HOME}/bin
+
+RUN python -m pip install --upgrade pip && python -m pip install -r requirements.txt
