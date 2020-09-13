@@ -94,12 +94,12 @@ eval $(minikube docker-env)
 ```
 
 ```bash
-docker build -t spark-hadoop:3.0.0 -f tools/docker/spark/Dockerfile.local.spark .
+make build_spark_docker
 ```
 
 Tear up:
 ```bash
-./tools/k8s/spark/create_local.sh
+make deploy_spark_k8s_cluster
 ```
 
 `I have for some reason noticed that it does not work when I do this in the script, so run this
@@ -117,7 +117,7 @@ echo "$(minikube ip) sparkkubernetes" | sudo tee -a /etc/hosts
 
 To tear down run:
 ```bash
-./tools/k8s/spark/delete_local.sh
+make delete_spark_k8s_cluster
 ```
 
 ### Verify K8S Cluster
