@@ -75,7 +75,7 @@ kubectl exec sparkmaster-cccbbdfcd-b7g2d -it -- spark-submit example_spark.py --
 
 [http://sparkkubernetes/jobs](http://sparkkubernetes/jobs)
 
-![alt text](img/detailedsparkui.png)
+![alt text](img/detailedsparkexecutors.png)
 
 To tear down run:
 ```bash
