@@ -1,67 +1,38 @@
 # deiteo
 
 Deiteo (데이터) means `data` in korean. This project builds up an environment consisting of, spark,
-kubernetes and kafka.
+kubernetes.
 
-To enable a streaming platform utilising `spark structured streaming`.
+The Spark cluster also has `poetry` as the `python package manager` but `Spark Scala` code can also be submitted.
 
-`WORK IN PROGRESS`
+The project also contains a `pyspark` example, which can be used to verify that `pyspark` works
+as expected with poetry in the cluster.
 
 # Requirements
 
-* pipenv
+* poetry
+    * curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+    * `source $HOME/.poetry/env`
 * docker
+* python3.9.1
 * kubectl
 * minikube
 
-# Local Environment Setup
+## Setup
 
-```bash
-docker-desktop -> preferences -> Kubernetes -> Enable Kubernetes
-
-Make sure to set memory above 8192, may need to restart docker-desktop
-```
-
-## pipenv
-
-This project utilises `pipenv`, due to its correctness, and nice features with dependency checks
-via the `Pipfile.lock`. It also enables us to control the Python environment in a nice modular
-way.
-
-First make sure to make a copy of the `.env` file.
-
-```bash
-cp .env.example .env
-```
-
-Then set the `PYTHONPATH` for `pipenv` to use for this project.
-```bash
-make pythonpath
-```
-
-Then run:
+For a fresh initial install, depending on the `pyproject.lock`:
 
 ```bash
 make build
 ```
 
-If a new `library` is added to the `Pipfile`, then run:
+If a new dependency is added, or removed, the `pyproject.lock` needs to be updated:
 
 ```bash
 make update
 ```
 
-Note:
-
-`to update the spark docker container, if a new package is added to Pipefile and a new Pipfile.lock is created run:`
-
-```bash
-make update_spark_docker_python_requirements
-```
-
-This will install the packages from `packages` and not from `dev-packages`.
-
-## Kubectl
+### Kubectl
 
 Install `kubectl`:
 ```bash
@@ -73,101 +44,96 @@ Test to ensure the version you installed is up-to-date:
 kubectl version --client
 ```
 
-## Minikube
+### Minikube
 
 Install `minikube`:
 ```bash
 brew install minikube
 ```
 
-Start `minikube`:
+### PyCharm
+
+Note that you will need at least `PyCharm` version `2020.3`.
+
+[Install Plugin to IDE Here!](https://plugins.jetbrains.com/plugin/14307-poetry)
+
+Enter:
+
 ```bash
-minikube start --memory 8192 --cpus 4 --vm=true
+Preferences -> Python Interpreter -> Add -> Poetry Environment -> Existing Environment (`if you ran make build it will automatically find it`)
 ```
 
-Enable `minikube` `dashboard`:
-```bash
-minikube dashboard
+## Tests
+
+### coverage
+
+To see what specific configuration that has been made to the `pytest` test, please look at:
+
+`.coveragec` and `pytest.ini`, for more info read:
+
+* [pytest](https://readthedocs.org/projects/pytest-cov/downloads/pdf/latest/)
+* [pytest-cov with .coveragec](https://pytest-cov.readthedocs.io/en/latest/config.html)
+
+Example output:
+```json
+Name                                                    Stmts   Miss  Cover   Missing
+-------------------------------------------------------------------------------------
+test_0                                                   43      3    93%   34-35, 39
+. . .
+test_N                                                   51     39    24%   21-30
+-------------------------------------------------------------------------------------
+TOTAL                                                    94     43    51%
 ```
 
-# Deploy to local K8S
+* Stmts - Total lines of code in a specific file
+* Miss - Total number of lines that are not covered
+* Cover - Percentage of all line of code that are covered, or (Stmts - Miss) / 100
+* Missing - Lines of codes that are not covered
+
+### .coverage config
+
+To modify the `.coverage` file for `unit` then modify `tests/coverage/unit/.coveragerc` or
+`tests/coverage/integration/.coveragerc`.
+
+They are separated because you might wanna exclude specific code via the `omit` based on if `unit` is `integration`
+are running.
+
+### Unit
+
+```bash
+make test type=unit
+```
+
+### Integration
+
+```bash
+make test type=integration
+```
+
+#### ipdb
+
+If you want to run with `debug mode with ipdb` directly from the console:
+
+Example:
+```bash
+make test type=unit test_argument=-s
+```
+
+```python
+class Something:
+    def __init__(self):
+        import ipdb
+        ipdb.set_trace()
+        self.foo = "foo"
+```
+
+* `n to step forward`
+* `s to step into`
+* `type any variable name while stepping to inspect it`
+
+# Deployment
 
 ## Spark
 
-I was inspired by this repository: https://github.com/testdrivenio/spark-kubernetes
-However I have continued on the structure and made my own improvements.
-
-### Docker
-
-The container is available under `tools/docker/spark/Dockerfile.local.spark`.
-
-It contains:
-
-* python3.7
-* spark 3.0.0
-
-The command `minikube docker-env` returns a set of bash environment variable exports to configure
-your local environment to re-use the Docker daemon inside the Minikube instance.
-```bash
-eval $(minikube docker-env)
-```
-
-```bash
-make build_spark_docker
-```
-
-Tear up:
-```bash
-make deploy_spark_k8s_cluster
-```
-
-`I have for some reason noticed that it does not work when I do this in the script, so run this
-stand alone for now!`
-
-```bash
-kubectl apply -f ./tools/k8s/spark/minikube-ingress.yaml
-```
-
-Then run:
-
-```bash
-echo "$(minikube ip) sparkkubernetes" | sudo tee -a /etc/hosts
-```
-
-The `spark web ui` and `spark detailed web ui` can now be reached at:
-
-[http://sparkkubernetes](http://sparkkubernetes/)
-![alt text](img/sparkui.png)
-
-`NOTE! jobs will only be available while you run a spark job, access this while running example
-code below, or simply run a pyspark shell interactively if there is a need to verify this`
-
-[http://sparkkubernetes/jobs](http://sparkkubernetes/jobs)
-![alt text](img/detailedsparkui.png)
-
-Start `minikube dashboard` to monitor the pods via the browser:
-```bash
-minikube dashboard
-```
-
-To tear down run:
-```bash
-make delete_spark_k8s_cluster
-```
-
-### Verify K8S Cluster
-
-`Example`
-
-```bash
-  |  ~/c/deiteo | on   DEITEO-001-F…To-Worker(s) !1 ▓▒░ kubectl get pods
-NAME                           READY   STATUS    RESTARTS   AGE
-spark-worker-cb4fc9c8d-fhsxh   1/1     Running   0          53m
-sparkmaster-cccbbdfcd-qktwq    1/1     Running   0          54m
->>
-```
-
-```bash
-kubectl exec sparkmaster-cccbbdfcd-b7g2d -it -- spark-submit example_spark.py
-```
-
+Please enter the link here: [spark deployment on k8s](deploy/k8s/spark/README.md) to proceed with
+setting up `spark` on `k8s` needed for this project.
