@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: spar-kworker
-          image: spark-hadoop:3.0.0
+          image: spark-hadoop-deiteo:3.0.1
           command: ["./spark-worker.sh"]
           ports:
             - containerPort: 8081

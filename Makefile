@@ -58,8 +58,8 @@ run-example-pyspark-docker:
 
 .PHONY: deploy_spark_k8s_cluster
 deploy_spark_k8s_cluster:
-	 ./deploy/scripts/k8s/create_local_spark.sh
+	 ./deploy/scripts/k8s/create_spark.sh
 
 .PHONY: delete_spark_k8s_cluster
 delete_spark_k8s_cluster:
-	 ./deploy/scripts/k8s/delete_local_spark.sh
+	 ./deploy/scripts/k8s/delete_spark.sh

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: sparkmaster
-          image: spark-hadoop:3.0.0
+          image: spark-hadoop-deiteo:3.0.1
           command: ["./spark-master.sh"]
           ports:
             - containerPort: 7077
