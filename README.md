@@ -3,10 +3,12 @@
 Deiteo (데이터) means `data` in korean. This project builds up an environment consisting of, spark,
 kubernetes.
 
-The Spark cluster also has `poetry` as the `python package manager` but `Spark Scala` code can also be submitted.
+This project sets up a `k8s` cluster and deploys a `spark` docker container within the cluster with a `master` and 
+a configurable amount of `workers`.
 
-The project also contains a `pyspark` example, which can be used to verify that `pyspark` works
-as expected with poetry in the cluster.
+The project has an example application that can be run locally and from within the cluster.
+
+The main idea however with this repository, is to create a `k8s` `spark` cluster which you can deploy `spark` applications against, either `pyspark` or `scala` applications.
 
 # Requirements
 
