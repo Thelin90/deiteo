@@ -6,6 +6,8 @@ kubernetes.
 This project sets up a `k8s` cluster and deploys a `spark` docker container within the cluster with a `master` and 
 a configurable amount of `workers`.
 
+[Official spark doc](https://spark.apache.org/docs/latest/running-on-kubernetes.html)
+
 The project has an example application that can be run locally and from within the cluster.
 
 The main idea however with this repository, is to create a `k8s` `spark` cluster which you can deploy `spark` applications against, either `pyspark` or `scala` applications.
