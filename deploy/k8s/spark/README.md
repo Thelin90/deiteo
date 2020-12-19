@@ -37,6 +37,10 @@ Tear up:
 make deploy_spark_k8s_cluster
 ```
 
+Browse into the `minikube dashboard` and this should be visible as it gets deployed to the cluster.
+
+![alt text](img/minikubedashboard.png)
+
 `I have for some reason noticed that it does not work when I do this in the script, so run this
 stand alone for now!`
 
