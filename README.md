@@ -139,5 +139,5 @@ class Something:
 
 ## Spark
 
-Please enter the link here: [spark deployment on k8s](deploy/k8s/spark/README.md) to proceed with
+Please enter the link here: [spark deployment on k8s](deploy/README.md) to proceed with
 setting up `spark` on `k8s` needed for this project.
