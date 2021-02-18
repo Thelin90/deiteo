@@ -22,6 +22,10 @@ The main idea however with this repository, is to create a `k8s` `spark` cluster
 * kubectl
 * minikube
 
+## Sonarcloud
+
+Project uses `sonarcloud` to measure quality.
+
 ## Setup
 
 For a fresh initial install, depending on the `pyproject.lock`:
