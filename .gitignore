@@ -5,7 +5,7 @@
 ####
 # Allow git workflow
 ####
-!.git/workflows/build.yaml
+!.github/workflows/build.yml
 
 # IDEA
 .idea/*
